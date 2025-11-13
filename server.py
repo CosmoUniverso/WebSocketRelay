@@ -1,5 +1,8 @@
 import asyncio
 import websockets
+import os
+
+PORT = int(os.environ.get("PORT", 10000))  # Render assegna la porta
 
 clients = set()
 
@@ -19,9 +22,9 @@ async def handler(websocket):
         print(f"🔴 Client disconnesso. Totale: {len(clients)}")
 
 async def main():
-    async with websockets.serve(handler, "0.0.0.0", 10000):
-        print("🚀 Server WebSocket avviato sulla porta 10000")
-        await asyncio.Future()  # resta in ascolto
+    async with websockets.serve(handler, "0.0.0.0", PORT):
+        print(f"🚀 Server WebSocket avviato sulla porta {PORT}")
+        await asyncio.Future()  # rimane in ascolto
 
 if __name__ == "__main__":
     asyncio.run(main())
